@@ -6,7 +6,7 @@ import { Button } from '@/components/ui/Button'
 import { motion } from 'framer-motion'
 
 export function Navbar() {
-    const { user, signOut } = useAuth()
+    const { user, handleSignOut } = useAuth()
 
     return (
         <motion.nav
@@ -28,7 +28,7 @@ export function Navbar() {
                             <Link href="/profile" className="hover:text-gray-300">
                                 Profile
                             </Link>
-                            <Button onClick={signOut} variant="destructive">
+                            <Button onClick={handleSignOut} variant="destructive">
                                 Sign Out
                             </Button>
                         </>

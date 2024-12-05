@@ -15,3 +15,13 @@ export interface AuthResponse {
     authData?: any;
     error?: AuthError;
 }
+
+export interface Profile {
+    id: string;
+    username?: string | null;
+    full_name?: string | null;
+    avatar_url?: string | null;
+    email?: string | null;
+    role?: string;
+    last_login?: string;
+}
