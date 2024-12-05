@@ -2,17 +2,26 @@
 'use client';
 
 import { useEffect } from 'react';
-import { redirect, useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/useAuth';
 import { motion } from 'framer-motion';
+import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
 
 export default function Dashboard() {
     const router = useRouter();
-    const { user, loading, handleSignOut } = useAuth();
+    const { user, loading } = useAuth();
+    const supabase = createClientComponentClient();
 
     useEffect(() => {
-        console.log('Dashboard mounted', { user, loading });
-    }, [user, loading]);
+        if (!loading && !user) {
+            router.replace('/login');
+        }
+    }, [user, loading, router]);
+
+    const handleSignOut = async () => {
+        await supabase.auth.signOut();
+        router.replace('/login');
+    };
 
     if (loading) {
         return (
@@ -20,7 +29,7 @@ export default function Dashboard() {
                 <motion.div
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
-                    transition={{ duration: 0.5 }}
+                    className="text-lg"
                 >
                     Loading...
                 </motion.div>
@@ -28,12 +37,7 @@ export default function Dashboard() {
         );
     }
 
-    // Add a small delay before redirect to ensure state is properly updated
     if (!user) {
-        console.log('No user found, redirecting to login');
-        setTimeout(() => {
-            router.push('/login');
-        }, 100);
         return null;
     }
 
@@ -54,9 +58,16 @@ export default function Dashboard() {
                 </button>
             </div>
 
-            <pre className="bg-gray-100 p-4 rounded">
-                {JSON.stringify({ user }, null, 2)}
-            </pre>
+            <div className="bg-white rounded-lg shadow p-6">
+                <h2 className="text-xl font-semibold mb-4">Welcome, {user.email}!</h2>
+                <div className="grid gap-4">
+                    <div className="border rounded p-4">
+                        <h3 className="font-medium mb-2">Account Details</h3>
+                        <p>Email: {user.email}</p>
+                        <p>Last Sign In: {new Date(user.last_sign_in_at || '').toLocaleString()}</p>
+                    </div>
+                </div>
+            </div>
         </motion.div>
     );
 }
