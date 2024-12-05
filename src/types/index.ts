@@ -5,3 +5,13 @@ export type AuthFormData = {
 };
 
 export type AuthProviders = 'google' | 'github';
+
+
+export interface AuthError {
+    message: string;
+}
+
+export interface AuthResponse {
+    authData?: any;
+    error?: AuthError;
+}

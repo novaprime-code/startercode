@@ -1,6 +1,6 @@
 // components/ui/Form.tsx
 import * as React from "react"
-import { motion } from "framer-motion"
+import { motion } from "motion/react"
 import { cn } from "@/lib/utils"
 
 interface FormProps extends React.FormHTMLAttributes<HTMLFormElement> {

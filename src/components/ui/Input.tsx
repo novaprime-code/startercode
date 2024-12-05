@@ -1,7 +1,7 @@
 // components/ui/Input.tsx
 import * as React from "react"
 import { cn } from "@/lib/utils"
-import { motion } from "framer-motion"
+import { motion } from "motion/react"
 
 export interface InputProps
     extends React.InputHTMLAttributes<HTMLInputElement> {

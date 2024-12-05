@@ -1,56 +1,76 @@
-// lib/auth.ts
-import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-import { AuthProviders, AuthFormData } from '../types';
+import { createClient } from './supabase/client';
+import { AuthFormData, AuthResponse } from '../types';
 
-export const signUp = async (data: AuthFormData) => {
-    const supabase = createClientComponentClient();
+const supabase = createClient();
+
+export const signUp = async (data: AuthFormData): Promise<AuthResponse> => {
+    if (data.password !== data.confirmPassword) {
+        return { error: { message: 'Passwords do not match' } };
+    }
 
     const { data: authData, error } = await supabase.auth.signUp({
         email: data.email,
         password: data.password,
         options: {
-            emailRedirectTo: `${location.origin}/auth/callback`
+            emailRedirectTo: `${window.location.origin}/dashboard`
         }
     });
 
-    return { authData, error };
+    if (error) {
+        return { error: { message: error.message } };
+    }
+
+    return { authData };
 };
 
-export const signIn = async (data: AuthFormData) => {
-    const supabase = createClientComponentClient();
-
+export const signIn = async (data: AuthFormData): Promise<AuthResponse> => {
     const { data: authData, error } = await supabase.auth.signInWithPassword({
         email: data.email,
         password: data.password
     });
 
-    return { authData, error };
+    if (error) {
+        return { error: { message: error.message } };
+    }
+
+    return { authData };
 };
 
-export const signInWithProvider = async (provider: AuthProviders) => {
-    const supabase = createClientComponentClient();
-
-    const { data, error } = await supabase.auth.signInWithOAuth({
+export const signInWithProvider = async (provider: 'google' | 'github') => {
+    const { error } = await supabase.auth.signInWithOAuth({
         provider,
         options: {
-            redirectTo: `${location.origin}/auth/callback`
+            redirectTo: `${window.location.origin}/auth/callback`
         }
     });
 
-    return { data, error };
+    if (error) {
+        console.error(`${provider.charAt(0).toUpperCase() + provider.slice(1)} Sign In Error:`, error);
+        return false;
+    }
+
+    return true;
 };
 
 export const signOut = async () => {
-    const supabase = createClientComponentClient();
-    return await supabase.auth.signOut();
+    const { error } = await supabase.auth.signOut();
+
+    if (error) {
+        console.error('Sign Out Error:', error);
+        return false;
+    }
+
+    return true;
 };
 
-export const resetPassword = async (email: string) => {
-    const supabase = createClientComponentClient();
-
+export const resetPassword = async (email: string): Promise<AuthResponse> => {
     const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${location.origin}/auth/reset-password`
+        redirectTo: `${window.location.origin}/reset-password`
     });
 
-    return { data, error };
+    if (error) {
+        return { error: { message: error.message } };
+    }
+
+    return { authData: data };
 };
