@@ -61,7 +61,7 @@ export const useAuth = () => {
 
         try {
             const { authData, error } = await signIn(data);
-
+            console.log('authData', authData);
             if (error) {
                 setError(error.message);
                 return false;
