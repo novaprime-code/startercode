@@ -1,12 +1,18 @@
 // src/app/dashboard/page.tsx
-'use client'
+'use client';
 
-import { redirect } from 'next/navigation'
-import { useAuth } from '@/hooks/useAuth'
-import { motion } from 'framer-motion'
+import { useEffect } from 'react';
+import { redirect, useRouter } from 'next/navigation';
+import { useAuth } from '@/hooks/useAuth';
+import { motion } from 'framer-motion';
 
 export default function Dashboard() {
-    const { user, loading, handleSignOut } = useAuth()
+    const router = useRouter();
+    const { user, loading, handleSignOut } = useAuth();
+
+    useEffect(() => {
+        console.log('Dashboard mounted', { user, loading });
+    }, [user, loading]);
 
     if (loading) {
         return (
@@ -19,11 +25,16 @@ export default function Dashboard() {
                     Loading...
                 </motion.div>
             </div>
-        )
+        );
     }
 
+    // Add a small delay before redirect to ensure state is properly updated
     if (!user) {
-        redirect('/login')
+        console.log('No user found, redirecting to login');
+        setTimeout(() => {
+            router.push('/login');
+        }, 100);
+        return null;
     }
 
     return (
@@ -43,17 +54,9 @@ export default function Dashboard() {
                 </button>
             </div>
 
-            <div className="bg-white rounded-lg shadow p-6">
-                <h2 className="text-xl font-semibold mb-4">Welcome, {user.email}!</h2>
-                <div className="grid gap-4">
-                    <div className="border rounded p-4">
-                        <h3 className="font-medium mb-2">Account Details</h3>
-                        <p>Email: {user.email}</p>
-                        <p>Last Sign In: {new Date(user.last_sign_in_at || '').toLocaleString()}</p>
-                    </div>
-                    {/* Add more dashboard sections here */}
-                </div>
-            </div>
+            <pre className="bg-gray-100 p-4 rounded">
+                {JSON.stringify({ user }, null, 2)}
+            </pre>
         </motion.div>
-    )
+    );
 }

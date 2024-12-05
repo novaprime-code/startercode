@@ -14,7 +14,7 @@ export function SocialLogins() {
     }
 
     return (
-        <div className="flex space-x-4">
+        <div className="flex space-x-4 mx-auto justify-center">
             <Button
                 onClick={handleGoogleSignIn}
                 className="flex items-center justify-center space-x-2"

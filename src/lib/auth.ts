@@ -1,5 +1,5 @@
 import { createClient } from './supabase/client';
-import { AuthFormData, AuthResponse } from '../types';
+import { AuthFormData, AuthResponse } from '@/types';
 
 const supabase = createClient();
 
@@ -23,11 +23,16 @@ export const signUp = async (data: AuthFormData): Promise<AuthResponse> => {
     return { authData };
 };
 
+// src/lib/auth.ts
 export const signIn = async (data: AuthFormData): Promise<AuthResponse> => {
+    console.log('Attempting sign in with:', { email: data.email });
+
     const { data: authData, error } = await supabase.auth.signInWithPassword({
         email: data.email,
         password: data.password
     });
+
+    console.log('Sign in response:', { authData, error });
 
     if (error) {
         return { error: { message: error.message } };
@@ -35,7 +40,6 @@ export const signIn = async (data: AuthFormData): Promise<AuthResponse> => {
 
     return { authData };
 };
-
 export const signInWithProvider = async (provider: 'google' | 'github') => {
     const { error } = await supabase.auth.signInWithOAuth({
         provider,

@@ -11,6 +11,8 @@ export async function middleware(request: NextRequest) {
         data: { session },
     } = await supabase.auth.getSession();
 
+    console.log('Middleware - Session:', !!session);
+
     // Auth routes protection
     if (session && ['/login', '/register', '/forgot-password'].includes(request.nextUrl.pathname)) {
         return NextResponse.redirect(new URL('/dashboard', request.url));
