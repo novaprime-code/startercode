@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useAuth } from '@/hooks/useAuth'
 import { Button } from '@/components/ui/Button'
-import { motion } from "motion/react"
+import { motion } from 'framer-motion'
 
 export function Navbar() {
     const { user, signOut } = useAuth()

@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import { useAuth } from '@/hooks/useAuth'
 import { Input } from '@/components/ui/Input'
 import { Button } from '@/components/ui/Button'
-import { SocialLogins } from '@/components/auth/SocialLogins'
+import { SocialLogins } from './SocialLogins'
 import Link from 'next/link'
 
 export function RegisterForm() {
