@@ -1,5 +1,23 @@
 # Next.js Authentication with Supabase and Framer Motion
 
+## Personal Information
+
+- **Name**: [Jay Shyam Patel]
+- **Email**: [jayshyampatel133@gmail.com]
+- **Phone**: [+977-9843-818406]
+- **Role Applied For**: Generalist Developer
+- **Address**: Satungal, Kathmandu, Nepal
+- **LinkedIn**: [Your LinkedIn Profile](https://www.linkedin.com/in/jay-shyam-patel/)
+- **GitHub**: [\[Your GitHub Profile\]](https://github.com/novaprime-code)
+
+## Time Log
+
+| Date | Time Spent (hrs) | Task Description |
+|------|------------------|------------------|
+| 2024-12-04 | 4 | Research, Project setup, initial configuration |
+| 2024-12-05 | 2 | Research, Authentication flow implementation |
+| 2024-12-05 | 1 | Research, Adding animations and polishing UI |
+
 ## Project Overview
 
 This project demonstrates a modern authentication system built with Next.js 14, Supabase, and Framer Motion. It features a polished user interface with smooth animations and comprehensive authentication flows including email/password, social logins (Google, GitHub), and password recovery.
@@ -140,7 +158,7 @@ This project demonstrates a modern authentication system built with Next.js 14, 
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/nextjs-supabase-auth.git
+git clone git@github.com:novaprime-code/startercode.git
 cd nextjs-supabase-auth
 
 # Install dependencies
@@ -231,9 +249,9 @@ Content-Type: application/json
    - Email verification
    - Role-based access control
 
-## Live Demo
+<!-- ## Live Demo
 
-Access the live demo at: [https://your-demo-url.vercel.app](https://your-demo-url.vercel.app)
+Access the live demo at: [https://your-demo-url.vercel.app](https://your-demo-url.vercel.app) -->
 
 ## Contributing
 
